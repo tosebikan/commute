@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
 function OnBoarding() {
   return (
