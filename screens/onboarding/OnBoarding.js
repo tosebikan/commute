@@ -1,5 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Animated } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Animated,
+  View,
+  Image,
+  Text
+} from 'react-native';
 
 // constants
 import { images, theme } from '../../constants';
@@ -9,36 +16,55 @@ const { onboarding1, onboarding2, onboarding3 } = images;
 const { COLORS, SIZES } = theme;
 
 // Dummy Data
-const onBoarding = [
+const onBoardings = [
   {
     title: 'Commute with ease',
     description:
       'best way to find people moving to similar destinations as you',
-    img: 'onboarding1'
+    img: onboarding1
   },
   {
     title: 'Commute safe',
     description:
       'Same trip multiple times with poeple living in your neighbourhood',
-    img: 'onboardings'
+    img: onboarding2
   },
   {
     title: 'Commute cheaply',
     description:
       'Monthly payment to handle trips to recurring destinations everyday',
-    img: 'onboarding3'
+    img: onboarding3
   }
 ];
 
-function renderContent() {
-  <Animated.ScollView>{}</Animated.ScollView>;
-}
+const OnBoarding = () => {
+  function renderContent() {
+    return (
+      <Animated.ScrollView
+        horizontal
+        pagingEnabled
+        scrollEnabled
+        snapToAlignment="center"
+      >
+        {onBoardings.map((item, index) => (
+          <View key={index} style={{ width: SIZES.width }}>
+            <View>
+              <Image
+                source={item.img}
+                resizeMode="cover"
+                style={styles.onboarding_image}
+              />
+            </View>
+          </View>
+        ))}
+      </Animated.ScrollView>
+    );
+  }
 
-function OnBoarding() {
   return (
     <SafeAreaView style={styles.container}>{renderContent()}</SafeAreaView>
   );
-}
+};
 export default OnBoarding;
 
 const styles = StyleSheet.create({
@@ -47,5 +73,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.white
+  },
+  onboarding_image: {
+    width: 100,
+    height: 100
   }
 });
