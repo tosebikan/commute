@@ -44,6 +44,8 @@ const OnBoarding = () => {
         horizontal
         pagingEnabled
         scrollEnabled
+        decelerationRate={0}
+        scrollEventThrottle={16}
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
       >
@@ -97,8 +99,24 @@ const OnBoarding = () => {
     );
   }
 
+  function renderDots() {
+    return (
+      <View style={styles.dotContainer}>
+        {onBoardings.map((item, index) => (
+          <View
+            key={`dot-${index}`}
+            style={[styles.dots, { width: 10, height: 10 }]}
+          ></View>
+        ))}
+      </View>
+    );
+  }
+
   return (
-    <SafeAreaView style={styles.container}>{renderContent()}</SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <View>{renderContent()}</View>
+      <View style={styles.dotRootContainer}>{renderDots()}</View>
+    </SafeAreaView>
   );
 };
 export default OnBoarding;
@@ -113,5 +131,18 @@ const styles = StyleSheet.create({
   onboarding_image: {
     width: '100%',
     height: '100%'
+  },
+  dotRootContainer: {
+    position: 'absolute',
+    bottom: SIZES.height > 700 ? '8%' : '6%'
+  },
+  dotContainer: {
+    flexDirection: 'row',
+    height: SIZES.padding
+  },
+  dots: {
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.black,
+    marginHorizontal: SIZES.radius / 2
   }
 });
