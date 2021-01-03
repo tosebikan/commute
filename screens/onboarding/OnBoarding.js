@@ -45,10 +45,21 @@ const OnBoarding = () => {
         pagingEnabled
         scrollEnabled
         snapToAlignment="center"
+        showsHorizontalScrollIndicator={false}
       >
         {onBoardings.map((item, index) => (
           <View key={index} style={{ width: SIZES.width }}>
-            <View>
+            <View style={{ position: 'absolute', zIndex: 1, top: '5%' }}>
+              <Text style={{ color: COLORS.gray }}>{item.title}</Text>
+              <Text>{item.description}</Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <Image
                 source={item.img}
                 resizeMode="cover"
@@ -75,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white
   },
   onboarding_image: {
-    width: 100,
-    height: 100
+    width: '100%',
+    height: '100%'
   }
 });
