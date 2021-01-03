@@ -26,7 +26,7 @@ const onBoardings = [
   {
     title: 'Commute safe',
     description:
-      'Same trip multiple times with poeple living in your neighbourhood',
+      'Same trip multiple times with people living in your neighbourhood',
     img: onboarding2
   },
   {
@@ -49,9 +49,34 @@ const OnBoarding = () => {
       >
         {onBoardings.map((item, index) => (
           <View key={index} style={{ width: SIZES.width }}>
-            <View style={{ position: 'absolute', zIndex: 1, top: '5%' }}>
-              <Text style={{ color: COLORS.gray }}>{item.title}</Text>
-              <Text>{item.description}</Text>
+            <View
+              style={{
+                position: 'absolute',
+                zIndex: 1,
+                top: '5%',
+                left: 40,
+                right: 40
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.gray,
+                  fontSize: 30,
+                  textAlign: 'center'
+                }}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLORS.gray,
+                  textAlign: 'center',
+                  marginTop: SIZES.base
+                }}
+              >
+                {item.description}
+              </Text>
             </View>
             <View
               style={{
