@@ -38,6 +38,8 @@ const onBoardings = [
 ];
 
 const OnBoarding = () => {
+  const scrollX = new Animated.Value(0);
+
   function renderContent() {
     return (
       <Animated.ScrollView
@@ -48,6 +50,18 @@ const OnBoarding = () => {
         scrollEventThrottle={16}
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX
+                }
+              }
+            }
+          ],
+          { useNativeDriver: false }
+        )}
       >
         {onBoardings.map((item, index) => (
           <View key={index} style={{ width: SIZES.width }}>
@@ -100,14 +114,29 @@ const OnBoarding = () => {
   }
 
   function renderDots() {
+    const dotPosition = Animated.divide(scrollX, SIZES.width);
     return (
       <View style={styles.dotContainer}>
-        {onBoardings.map((item, index) => (
-          <View
-            key={`dot-${index}`}
-            style={[styles.dots, { width: 10, height: 10 }]}
-          ></View>
-        ))}
+        {onBoardings.map((item, index) => {
+          const opacity = dotPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: 'clamp'
+          });
+
+          const dotSize = dotPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [SIZES.base, 14, SIZES.base],
+            extrapolate: 'clamp'
+          });
+          return (
+            <Animated.View
+              key={`dot-${index}`}
+              opacity={opacity}
+              style={[styles.dots, { width: dotSize, height: dotSize }]}
+            ></Animated.View>
+          );
+        })}
       </View>
     );
   }
@@ -126,7 +155,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.white
+    backgroundColor: COLORS.white,
+    marginBottom: -40
   },
   onboarding_image: {
     width: '100%',
