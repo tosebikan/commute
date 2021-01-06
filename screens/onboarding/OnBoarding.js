@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   Animated,
   View,
   Image,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 // constants
@@ -38,7 +39,19 @@ const onBoardings = [
 ];
 
 const OnBoarding = () => {
+  const [completed, setCompleted] = useState(false);
   const scrollX = new Animated.Value(0);
+
+  useEffect(() => {
+    // check when scrolling ends
+    scrollX.addListener(({ value }) => {
+      if (Math.floor(value / SIZES.width) === onBoardings.length - 1) {
+        setCompleted(true);
+      }
+    });
+
+    return () => scrollX.removeListener();
+  }, []);
 
   function renderContent() {
     return (
@@ -107,6 +120,34 @@ const OnBoarding = () => {
                 style={styles.onboarding_image}
               />
             </View>
+
+            {/* skip button*/}
+            <View
+              style={{
+                backgroundColor: 'white',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                bottom: '5%',
+                right: 0,
+                width: 100,
+                height: 50,
+                borderTopLeftRadius: 30,
+                borderBottomLeftRadius: 30
+              }}
+            >
+              <TouchableOpacity onPress={() => alert('Skip onboarding')}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLORS.black,
+                    fontWeight: '600'
+                  }}
+                >
+                  {completed ? 'Start' : 'Skip'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         ))}
       </Animated.ScrollView>
@@ -164,7 +205,7 @@ const styles = StyleSheet.create({
   },
   dotRootContainer: {
     position: 'absolute',
-    bottom: SIZES.height > 700 ? '8%' : '6%'
+    bottom: SIZES.height > 700 ? '10%' : '8%'
   },
   dotContainer: {
     flexDirection: 'row',
