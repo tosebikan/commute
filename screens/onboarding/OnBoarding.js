@@ -168,7 +168,9 @@ const styles = StyleSheet.create({
   },
   dotContainer: {
     flexDirection: 'row',
-    height: SIZES.padding
+    height: SIZES.padding,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   dots: {
     borderRadius: SIZES.radius,
