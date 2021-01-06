@@ -47,6 +47,8 @@ const OnBoarding = () => {
     scrollX.addListener(({ value }) => {
       if (Math.floor(value / SIZES.width) === onBoardings.length - 1) {
         setCompleted(true);
+      } else {
+        setCompleted(false);
       }
     });
 
